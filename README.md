@@ -1,0 +1,1 @@
+This repo will hold our class project for Intro to Machine learning.
