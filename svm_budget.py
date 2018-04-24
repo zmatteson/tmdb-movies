@@ -78,7 +78,7 @@ def director(x):
 mov['crew']=mov['crew'].apply(director)
 mov.rename(columns={'crew':'director'},inplace=True)
 
-# print(movies.head(2))
+print(movies.head(2))
 
 movies=movies.merge(mov,left_on='id',right_on='movie_id',how='left')
 
@@ -126,15 +126,15 @@ print(movies['genres_bin'].head(4))
 movies['cast']=movies['cast'].str.strip('[]').str.replace(' ','').str.replace("'",'').str.replace('"','')
 movies['cast']=movies['cast'].str.split(',')
 
-# plt.subplots(figsize=(12,10))
-# list1=[]
-# for i in movies['cast']:
-#     list1.extend(i)
-# ax=pd.Series(list1).value_counts()[:15].sort_values(ascending=True).plot.barh(width=0.9)
-# for i, v in enumerate(pd.Series(list1).value_counts()[:15].sort_values(ascending=True).values): 
-#     ax.text(.8, i, v,fontsize=10,color='white',weight='bold')
-# plt.title('Actors with highest appearance')
-# ax.patches[14].set_facecolor('r')
-# plt.show()
+plt.subplots(figsize=(12,10))
+list1=[]
+for i in movies['cast']:
+    list1.extend(i)
+ax=pd.Series(list1).value_counts()[:15].sort_values(ascending=True).plot.barh(width=0.9)
+for i, v in enumerate(pd.Series(list1).value_counts()[:15].sort_values(ascending=True).values): 
+    ax.text(.8, i, v,fontsize=10,color='white',weight='bold')
+plt.title('Actors with highest appearance')
+ax.patches[14].set_facecolor('r')
+plt.show()
 
 
