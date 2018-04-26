@@ -13,6 +13,7 @@ import codecs
 from IPython.display import HTML
 from patsy import dmatrices
 from sklearn import linear_model, datasets
+from sklearn.svm import SVR
 from sklearn.cross_validation import train_test_split
 from sklearn import metrics
 from sklearn.cross_validation import cross_val_score
@@ -79,20 +80,22 @@ y_train = train[target].dropna()
 X_test = test[features].dropna()
 y_test = test[target].dropna()
 
+svr = SVR(kernel='rbf', C=1e3, gamma=0.1)
+# svr = SVR(kernel='linear', C=1e3) 
+# svr = SVR(kernel='poly', C=1e3, degree=2)
 
-lin = linear_model.LinearRegression()
 # train the model on the training set
-lin.fit(X_train, y_train)
-y_pred = lin.predict(X_test)
+svr.fit(X_train, y_train)
+y_pred = svr.predict(X_test)
 plt.scatter(y_test, y_pred, color='blue')
 plt.xlabel("Real revenue")
 plt.ylabel("Predicted revenue")
 plt.show()
 
-lin_score_train = lin.score(X_test, y_test)
-lin_score_test = lin.score(X_train, y_train)
-print("Training score: ",lin_score_train)
-print("Testing score: ",lin_score_test)
+svr_score_train = svr.score(X_test, y_test)
+svr_score_test = svr.score(X_train, y_train)
+print("Training score: ",svr_score_train)
+print("Testing score: ",svr_score_test)
 
 # y = movies.revenue.values
 
@@ -102,7 +105,7 @@ print("Testing score: ",lin_score_test)
 # x = preprocessing.scale(x)
 # y = preprocessing.scale(y)
 
-# regr = linear_model.LinearRegression()
+# regr = scr_rbfear_model.scr_rbfearRegression()
 # regr.fit(x,y)
 
 
