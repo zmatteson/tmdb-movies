@@ -16,6 +16,11 @@ from sklearn import linear_model, datasets
 from sklearn.cross_validation import train_test_split
 from sklearn import metrics
 from sklearn.cross_validation import cross_val_score
+from sklearn import preprocessing
+import seaborn as sns
+from sklearn.model_selection import cross_val_predict
+import scikitplot as skplt
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
 movies=pd.read_csv('tmdb_5000_movies.csv', usecols=['genres','budget','id','revenue','title','release_date', 'vote_average', 'vote_count'])
 mov=pd.read_csv('tmdb_5000_credits.csv')
@@ -53,38 +58,58 @@ def director(x):
 mov['crew']=mov['crew'].apply(director)
 mov.rename(columns={'crew':'director'},inplace=True)
 
-
-
 movies=movies.merge(mov,left_on='id',right_on='movie_id',how='left')
 
-movies['profitability'] = movies['revenue'] - movies['budget']
 
-y = movies.revenue.values
-x = movies.vote_average.values
-print(x.shape, y.shape)
-length = 4083
-x = x.reshape(-1, 1)
-y = y.reshape(-1, 1)
+# for index in movies:
+#     mov.loc[index,'release_date'] = int(mov.loc[index,'release_date'][:4])
 
-regr = linear_model.LinearRegression()
-regr.fit(x,y)
+movies.fillna(value=0,axis=1,inplace=True)
 
-plt.scatter(x, y,  color='black')
-plt.plot(x, regr.predict(x), color='blue', linewidth=3)
-plt.xticks(())
-plt.yticks(())
+features = ['vote_average','budget','vote_count']
+
+target = ['revenue']
+
+train, test = train_test_split(movies,test_size=0.30)
+train.head()
+
+
+X_train = train[features].dropna()
+y_train = train[target].dropna()
+X_test = test[features].dropna()
+y_test = test[target].dropna()
+
+
+lin = linear_model.LinearRegression()
+# train the model on the training set
+lin.fit(X_train, y_train)
+y_pred = lin.predict(X_test)
+plt.scatter(y_test, y_pred, color='blue')
+plt.xlabel("Real revenue")
+plt.ylabel("Predicted revenue")
 plt.show()
 
-# Note the difference in argument order
-# lm = linear_model.LinearRegression()
-# model = lm.fit(X,y)
+lin_score_train = lin.score(X_test, y_test)
+lin_score_test = lin.score(X_train, y_train)
+print("Training score: ",lin_score_train)
+print("Testing score: ",lin_score_test)
 
-# predictions = lm.predict(X)
-# print(predictions)[0:5]
+# y = movies.revenue.values
 
-# model.summary()
+# length = 4083
+# y = y.reshape(-1, 1)
 
-print(movies.describe())
+# x = preprocessing.scale(x)
+# y = preprocessing.scale(y)
+
+# regr = linear_model.LinearRegression()
+# regr.fit(x,y)
+
+
+
+# regr.summary()
+
+# print(movies.describe())
 
 
 

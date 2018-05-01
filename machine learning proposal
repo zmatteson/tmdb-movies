@@ -1,0 +1,21 @@
+Proposal for Film Revenue Estimator Using TMDB Datasets
+Team members
+Evan Powers, Zebulun Matteson, Alyssa LeJeune
+
+Description of the problem
+We will use the Movie DB movie dataset at https://www.kaggle.com/rounakbanik/the-movies-dataset and supervised learning to estimate the amount of revenue that a movie will earn, depending on factors such as who is acting in it. We could also use Support Vector Machines to categorize the outcome of movies (box office topper, dud, etc.)
+
+What has been done before and how our project is unique
+The dataset has been used before for to make Movie Recommenders, which will recommend you movies based on your preferences. We did not see any kernel on Kaggle.com that took our approach of predicting the revenue of movies, so we could get some unique and new results.
+Preliminary plan
+We will break up the project into three stages: Exploration, Refinement, Analysis. Each stage will last one-third the length of the full project.
+In the Exploration stage, we will begin trying out the machine learning algorithms that we have recently learned on the IMDB data to see what quality of results we can get from the different approaches, such as linear regression.
+In the Refinement stage, we focus on the successes we had in the Exploration stage, and try to optimize them, “tweak” parameters, etc.  
+In the Analysis stage, we will gather the conclusive results from the Refinement stage and use them to compile a presentation and final report. We will try to draw the most meaningful conclusions possible given our model.
+References
+Cross-training: Learning probabilistic mappings between topics 
+(Sarawagi, et alia. IIT Bombay 2003)
+https://www.cse.iitb.ac.in/~soumen/doc/sigkdd2003/sigkdd2003.pdf
+The Deep Journey from Content to Collaborative Filtering (Barkan, et alia. Microsoft 2017)
+https://arxiv.org/ftp/arxiv/papers/1611/1611.00384.pdf
+
